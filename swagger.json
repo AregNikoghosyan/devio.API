@@ -1,0 +1,4387 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.0",
+		"title": "INEED API DOC",
+		"description": "OpenAPI Specification for INEED API"
+	},
+	"schemes": [
+		"http"
+	],
+	"host": "localhost:4002",
+	"basePath": "/api",
+	"tags": [
+		{
+			"name": "Auth",
+			"description": "Operations with auth"
+		},
+		{
+			"name": "Device",
+			"description": "Operations with device"
+		},
+		{
+			"name": "Category",
+			"description": "Operations with category"
+		},
+		{
+			"name": "User",
+			"description": "Operations with user"
+		},
+		{
+			"name": "Request",
+			"description": "Operations with request"
+		},
+		{
+			"name": "MU",
+			"description": "Operations with m/u"
+		},
+		{
+			"name": "Brand",
+			"description": "Operations with brand"
+		},
+		{
+			"name": "Product",
+			"description": "Operations with product"
+		},
+		{
+			"name": "WishList",
+			"description": "Operations with wish lists"
+		},
+		{
+			"name": "Conversation",
+			"description": "Operations with conversations"
+		},
+		{
+			"name": "Partner",
+			"description": "Operations with partners"
+		}
+	],
+	"paths": {
+		"/auth/socialLogin": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Social login",
+				"description": "Functionality for user to login with social media.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Social login",
+						"description": "Social login request body, language, device token and device id are required for mobile",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"osType": {
+									"type": "number"
+								},
+								"provider": {
+									"type": "number"
+								},
+								"token": {
+									"type": "string"
+								},
+								"language": {
+									"type": "number"
+								},
+								"deviceToken": {
+									"type": "string"
+								},
+								"deviceId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/sendEmail": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Send email",
+				"description": "Functionality for sending verification email to user.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Send email",
+						"description": "Send email request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"osType": {
+									"type": "number"
+								},
+								"email": {
+									"type": "string",
+									"format": "email"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/verify": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Verify email",
+				"description": "Functionality for checking verification code sent to user.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Verify email",
+						"description": "Verify email request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"email": {
+									"type": "string",
+									"format": "email"
+								},
+								"code": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/register": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Register user",
+				"description": "Functionality for users to register locally.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Register user",
+						"description": "Register user request body, deviceId is required for mobile",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"osType": {
+									"type": "number"
+								},
+								"email": {
+									"type": "string",
+									"format": "email"
+								},
+								"code": {
+									"type": "string"
+								},
+								"password": {
+									"type": "string"
+								},
+								"language": {
+									"type": "number"
+								},
+								"deviceId": {
+									"type": "string"
+								},
+								"deviceToken": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/forgot/sendEmail": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Send restore email",
+				"description": "Functionality for sending forgot email to user.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Send restore email",
+						"description": "Send restore email request body.",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"osType": {
+									"type": "number"
+								},
+								"email": {
+									"type": "string",
+									"format": "email"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/forgot/verify": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Verify restore email",
+				"description": "Verify password restore requested user.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Verify restore email",
+						"description": "Verify restore email request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"email": {
+									"type": "string",
+									"format": "email"
+								},
+								"code": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/forgot/restore": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Restore password and login",
+				"description": "Functionality for users to restore password.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Restore password",
+						"description": "Restore password request body, deviceId is required for mobile",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"osType": {
+									"type": "number"
+								},
+								"email": {
+									"type": "string",
+									"format": "email"
+								},
+								"code": {
+									"type": "string"
+								},
+								"password": {
+									"type": "string"
+								},
+								"language": {
+									"type": "number"
+								},
+								"deviceId": {
+									"type": "string"
+								},
+								"deviceToken": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/loginUser": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Login user",
+				"description": "Functionality for users to log in.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Login user",
+						"description": "Login user request body, deviceId, language are required for mobile",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"osType": {
+									"type": "number"
+								},
+								"email": {
+									"type": "string",
+									"format": "email"
+								},
+								"password": {
+									"type": "string"
+								},
+								"language": {
+									"type": "number"
+								},
+								"deviceId": {
+									"type": "string"
+								},
+								"deviceToken": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/loginAdmin": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Login admin",
+				"description": "Login admin functionality.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Login admin",
+						"description": "Log in admin request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"email": {
+									"type": "string",
+									"format": "email"
+								},
+								"password": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/logOut": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Log out",
+				"description": "Functionality for user to log out.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Log out user",
+						"description": "Log out user request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"deviceToken": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/auth/changePassword": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Change password",
+				"description": "Functionality for user to change password.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Change password for admin and partner",
+						"description": "Change password user request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"password": {
+									"type": "string"
+								},
+								"confirmPassword": {
+									"type": "string"
+								},
+								"oldPassword": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/device": {
+			"post": {
+				"tags": [
+					"Device"
+				],
+				"summary": "Set device",
+				"description": "Functionality to create new device when user selects language.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Set device",
+						"description": "Set device request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"osType": {
+									"type": "number"
+								},
+								"language": {
+									"type": "number"
+								},
+								"deviceToken": {
+									"type": "string"
+								},
+								"deviceId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Device"
+				],
+				"summary": "Get settings",
+				"description": "Functionality to get device settings.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"name": "deviceId",
+						"in": "header",
+						"required": true,
+						"description": "Device identifier",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Device"
+				],
+				"summary": "Set device token",
+				"description": "Functionality to set device token.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"in": "body",
+						"name": "Set token",
+						"description": "Set token request body, where deviceId and device Token are required",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"deviceId": {
+									"type": "string"
+								},
+								"deviceToken": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/device/permission": {
+			"put": {
+				"tags": [
+					"Device"
+				],
+				"summary": "Open / close permission",
+				"description": "Functionality to change notification settings for user.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"in": "body",
+						"name": "Change permission",
+						"description": "Change permission request body, if user is not logged in, deviceId and device Token are required",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "number"
+								},
+								"deviceId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/device/language": {
+			"put": {
+				"tags": [
+					"Device"
+				],
+				"summary": "Change language",
+				"description": "Functionality to change language for user.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"in": "body",
+						"name": "Change language",
+						"description": "Change language request body, if user is not logged in, deviceId and device Token are required",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"language": {
+									"type": "number"
+								},
+								"deviceId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/user": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"summary": "Get user profile",
+				"description": "Get user profile functionality for users.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "Update user",
+				"description": "Functionality for user to update profile data.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Update user",
+						"description": "Update user request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"firstName": {
+									"type": "string"
+								},
+								"lastName": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/user/phone": {
+			"put": {
+				"tags": [
+					"User"
+				],
+				"summary": "Update user phone",
+				"description": "Functionality for user to update phone number.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Update user phone",
+						"description": "Update user phone request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"phoneNumber": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/user/verifyPhone": {
+			"post": {
+				"tags": [
+					"User"
+				],
+				"summary": "Verify phone number",
+				"description": "Functionality for user to verify phone number.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Verify phone number",
+						"description": "Verify phone number request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"phoneNumber": {
+									"type": "string"
+								},
+								"code": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/add": {
+			"post": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Add request",
+				"description": "Add new request functionality for all",
+				"consumes": "application/x-www-form-urlencoded",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"required": false,
+						"description": "Bearer token",
+						"type": "string"
+					},
+					{
+						"name": "type",
+						"description": "Type of the request(usual or only file list)",
+						"type": "number",
+						"in": "formData",
+						"required": true
+					},
+					{
+						"name": "category",
+						"description": "Category of the requesting item",
+						"type": "string",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "iNeed",
+						"description": "Short name, what is needed, is required when type is usual",
+						"type": "string",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "mu",
+						"description": "Measurement unit of the required item, is required when type is usual",
+						"type": "string",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "count",
+						"description": "Count of the required item, is required when type is usual",
+						"type": "number",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "description",
+						"description": "Long description of the required item",
+						"type": "string",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "deviceId",
+						"description": "Device ID of the device of guest",
+						"type": "number",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "doc",
+						"description": "Document file, describing required item / pdf, doc, docx, xlsx",
+						"type": "file",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "audio",
+						"description": "Audio file, describing required item",
+						"type": "file",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "photo",
+						"description": "Photo file, describing required item",
+						"type": "file",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "video",
+						"description": "Video file, describing required item",
+						"type": "file",
+						"in": "formData",
+						"required": false
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfull response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/draft": {
+			"get": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Get draft list",
+				"description": "Functionality to get draft request list.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"$ref": "#/parameters/pageNo"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					},
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"name": "deviceId",
+						"in": "query",
+						"required": false,
+						"description": "Device identifier",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Update draft request",
+				"description": "Functionality to update draft request.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"in": "body",
+						"name": "Update draft",
+						"description": "Update draft request body, if user is not logged in, deviceId is required",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "number"
+								},
+								"category": {
+									"type": "string"
+								},
+								"iNeed": {
+									"type": "string"
+								},
+								"mu": {
+									"type": "string"
+								},
+								"count": {
+									"type": "number"
+								},
+								"description": {
+									"type": "string"
+								},
+								"removeFileList": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"deviceId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Delete draft request",
+				"description": "Functionality to delete draft request.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"in": "body",
+						"name": "Delete draft",
+						"description": "Delete draft request body, if user is not logged in, deviceId is required",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "number"
+								},
+								"deviceId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/draftDetails": {
+			"get": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Get draft request details",
+				"description": "Functionality to get draft request details.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"$ref": "#/parameters/idInQuery"
+					},
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"name": "deviceId",
+						"in": "query",
+						"required": false,
+						"description": "Device identifier",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/send": {
+			"post": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Send request pack",
+				"description": "Functionality to send request pack for all.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"in": "body",
+						"name": "Send request pack",
+						"description": "Send request pack request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"email": {
+									"type": "string"
+								},
+								"phoneNumber": {
+									"type": "string"
+								},
+								"firstName": {
+									"type": "string"
+								},
+								"lastName": {
+									"type": "string"
+								},
+								"deviceId": {
+									"type": "string"
+								},
+								"idList": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/pack": {
+			"get": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Get request list",
+				"description": "Functionality to get request lists(active / history).",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"$ref": "#/parameters/pageNo"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					},
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": true,
+						"description": "Request status",
+						"type": "number"
+					},
+					{
+						"name": "deviceId",
+						"in": "query",
+						"required": false,
+						"description": "Device identifier",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/packDetails": {
+			"get": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Get request details",
+				"description": "Functionality to get request details(active / history).",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"name": "deviceId",
+						"in": "query",
+						"required": false,
+						"description": "Device identifier",
+						"type": "string"
+					},
+					{
+						"name": "id",
+						"in": "query",
+						"required": false,
+						"description": "Request id",
+						"type": "string"
+					},
+					{
+						"name": "code",
+						"in": "query",
+						"required": false,
+						"description": "Request's short code",
+						"type": "string"
+					},
+					{
+						"name": "phoneNumber",
+						"in": "query",
+						"required": false,
+						"description": "Request's phoneNumber",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/packList": {
+			"post": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Get request list FOR ADMIN",
+				"description": "Functionality to get request list for admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Get request list",
+						"description": "Get request list body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"pageNo": {
+									"type": "number"
+								},
+								"limit": {
+									"type": "number"
+								},
+								"language": {
+									"type": "number"
+								},
+								"category": {
+									"type": "string"
+								},
+								"status": {
+									"type": "number"
+								},
+								"search": {
+									"type": "string"
+								},
+								"dateFrom": {
+									"type": "string",
+									"format": "date"
+								},
+								"dateTo": {
+									"type": "string",
+									"format": "date"
+								},
+								"countFrom": {
+									"type": "string"
+								},
+								"countTo": {
+									"type": "string"
+								},
+								"sortBy": {
+									"type": "number"
+								},
+								"sortTo": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/packDetailsAdmin": {
+			"get": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Get request details FOR ADMIN",
+				"description": "Functionality to get request details for admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"$ref": "#/parameters/idInQuery"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/pack/cancel": {
+			"put": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Cancel request",
+				"description": "Functionality to cancel request.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"in": "body",
+						"name": "cancel request",
+						"description": "Cancel request body, if user is not logged in, deviceId is required, else, shortCode and phoneNumber",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"deviceId": {
+									"type": "string"
+								},
+								"shortCode": {
+									"type": "string"
+								},
+								"phoneNumber": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/failed": {
+			"put": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Set request failed FOR ADMIN",
+				"description": "Functionality for admin to set request failed.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"$ref": "#/parameters/idInQuery"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/product": {
+			"put": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Attach product to request FOR ADMIN",
+				"description": "Functionality for admin to attach product to request.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"in": "body",
+						"name": "Request body",
+						"description": "Attach file to request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"productId": {
+									"type": "string"
+								},
+								"requestId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/request/succeed": {
+			"put": {
+				"tags": [
+					"Request"
+				],
+				"summary": "Set request succeed FOR ADMIN",
+				"description": "Functionality for admin to set request succeed.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"$ref": "#/parameters/idInQuery"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/category": {
+			"post": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Create category",
+				"description": "Create new category functionality for admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Create category",
+						"description": "Create category request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"url": {
+									"type": "string"
+								},
+								"translations": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"language": {
+												"type": "number"
+											},
+											"name": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Update category",
+				"description": "Update category functionality for admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Update category",
+						"description": "Update category request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"url": {
+									"type": "string"
+								},
+								"translations": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"language": {
+												"type": "number"
+											},
+											"name": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Get category list FOR ADMIN",
+				"description": "Get category list functionality FOR ADMIN.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"$ref": "#/parameters/idInQueryOptional"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Delete category list FOR ADMIN",
+				"description": "Delete category list functionality FOR ADMIN.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"$ref": "#/parameters/idInQuery"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/category/icon": {
+			"post": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Add category icon FOR ADMIN",
+				"description": "Add request category icon functionality for admin",
+				"consumes": "application/x-www-form-urlencoded",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"required": true,
+						"description": "Bearer token",
+						"type": "string"
+					},
+					{
+						"name": "id",
+						"description": "Category id",
+						"type": "string",
+						"in": "formData",
+						"required": true
+					},
+					{
+						"name": "icon",
+						"description": "Icon of the category",
+						"type": "file",
+						"in": "formData",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/category/all": {
+			"get": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Get category list",
+				"description": "Get category list functionality for users.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"$ref": "#/parameters/idInQueryOptional"
+					},
+					{
+						"name": "search",
+						"in": "query",
+						"required": false,
+						"description": "Search key",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/category/position": {
+			"put": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Change position of category",
+				"description": "Functionality to change position of category for admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Change position",
+						"description": "Change position request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"position": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/category/short": {
+			"get": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Get main category list",
+				"description": "Get category list functionality",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"name": "search",
+						"in": "query",
+						"required": false,
+						"description": "Search key",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/category/device": {
+			"get": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Functionality for all to get category list with items or sub categories in them.",
+				"description": "Functionality for all to get category list with items or sub categories in them",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/languageInQuery"
+					},
+					{
+						"$ref": "#/parameters/idInQueryOptional"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/category/hover": {
+			"get": {
+				"tags": [
+					"Category"
+				],
+				"summary": "Functionality for web to get category list for hover.",
+				"description": "Functionality for web to get category list for hover",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/languageInQuery"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/mu": {
+			"post": {
+				"tags": [
+					"MU"
+				],
+				"summary": "Create mu",
+				"description": "Create new mu functionality for admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Create mu",
+						"description": "Create mu request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"translations": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"language": {
+												"type": "number"
+											},
+											"name": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"MU"
+				],
+				"summary": "Update mu",
+				"description": "Update mu functionality for admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Update mu",
+						"description": "Update mu request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"translations": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"language": {
+												"type": "number"
+											},
+											"name": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"MU"
+				],
+				"summary": "Get mu list",
+				"description": "Get mu list functionality.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/languageInQuery"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"MU"
+				],
+				"summary": "Delete mu FOR ADMIN",
+				"description": "Delete mu functionality FOR ADMIN.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Delete mu",
+						"description": "Delete mu request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/mu/list": {
+			"get": {
+				"tags": [
+					"MU"
+				],
+				"summary": "Get mu list FOR ADMIN",
+				"description": "Get mu list functionality FOR ADMIN.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/brand": {
+			"post": {
+				"tags": [
+					"Brand"
+				],
+				"summary": "Create brand",
+				"description": "Create new brand functionality for admin / partner.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "name",
+						"description": "Brand name",
+						"type": "string",
+						"in": "formData",
+						"required": true
+					},
+					{
+						"name": "logo",
+						"description": "Logo of the brand",
+						"type": "file",
+						"in": "formData",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Brand"
+				],
+				"summary": "Update brand",
+				"description": "Update brand functionality for admin / partner.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "id",
+						"description": "Brand id",
+						"type": "string",
+						"in": "formData",
+						"required": true
+					},
+					{
+						"name": "name",
+						"description": "Brand name",
+						"type": "string",
+						"in": "formData",
+						"required": false
+					},
+					{
+						"name": "logo",
+						"description": "Logo of the brand",
+						"type": "file",
+						"in": "formData",
+						"required": false
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Brand"
+				],
+				"summary": "Get brand list FOR ADMIN",
+				"description": "Get brand list functionality for admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"$ref": "#/parameters/pageNo"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					},
+					{
+						"name": "search",
+						"in": "query",
+						"required": false,
+						"description": "Search key",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/brand/auto": {
+			"get": {
+				"tags": [
+					"Brand"
+				],
+				"summary": "Get brand list FOR AUTOCOMPLETE",
+				"description": "Get brand list functionality for autocomplete.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"name": "all",
+						"in": "query",
+						"required": true,
+						"description": "Get all brands, or only having product ones",
+						"type": "boolean"
+					},
+					{
+						"name": "search",
+						"in": "query",
+						"required": false,
+						"description": "Search key",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/prepare": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Get Id for preparing product",
+				"description": "Functionality to get ID of the new product for partner / admin.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/main": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to set first details - name, etc",
+				"description": "Functionality for admin / partner to set first details - name, etc.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Create product",
+						"description": "Create product request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"mu": {
+									"type": "string"
+								},
+								"brand": {
+									"type": "string"
+								},
+								"translations": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"language": {
+												"type": "number"
+											},
+											"name": {
+												"type": "string"
+											},
+											"description": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to get first details - name, etc.",
+				"description": "Functionality for admin / partner to get first details - name, etc.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "id",
+						"in": "query",
+						"required": true,
+						"description": "Product Id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/pricing": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to set first details - name, etc.",
+				"description": "Functionality for admin / partner to set first details - name, etc.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Create product",
+						"description": "Create product request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"categories": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"price": {
+									"type": "number"
+								},
+								"bonus": {
+									"type": "number"
+								},
+								"discount": {
+									"type": "number"
+								},
+								"discountStartDate": {
+									"type": "string",
+									"format": "date"
+								},
+								"discountEndDate": {
+									"type": "string",
+									"format": "date"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to get first details - name, etc.",
+				"description": "Functionality for admin / partner to get first details - name, etc.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "id",
+						"in": "query",
+						"required": true,
+						"description": "Product Id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/images": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to set and unset images of product.",
+				"description": "Functionality for admin / partner to set and unset images of product.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "id",
+						"description": "Product id",
+						"type": "string",
+						"in": "formData",
+						"required": true
+					},
+					{
+						"name": "removeIdList[0]",
+						"in": "formData",
+						"required": false,
+						"description": "Remove file id list",
+						"type": "string"
+					},
+					{
+						"name": "image",
+						"description": "Image of the product",
+						"type": "file",
+						"in": "formData",
+						"required": false
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to get images of product.",
+				"description": "Functionality for admin / partner to get images of product.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "id",
+						"in": "query",
+						"required": true,
+						"description": "Product Id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/generate": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to generate product versions.",
+				"description": "Functionality for admin / partner to generate product versions.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Create product",
+						"description": "Create product request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"attributes": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/versions": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to set versions for product.",
+				"description": "Functionality for admin / partner to set versions for product.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Create product",
+						"description": "Create product request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"attributes": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"versions": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string"
+											},
+											"product": {
+												"type": "string"
+											},
+											"hidden": {
+												"type": "boolean"
+											},
+											"price": {
+												"type": "number"
+											},
+											"bonus": {
+												"type": "number"
+											},
+											"photo": {
+												"type": "string"
+											},
+											"attributes": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"attribute": {
+															"type": "string"
+														},
+														"option": {
+															"type": "string"
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to get versions for product.",
+				"description": "Functionality for admin / partner to get versions for product.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "id",
+						"in": "query",
+						"required": true,
+						"description": "Product Id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/features": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to set features for product.",
+				"description": "Functionality for admin / partner to set features for product.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Create product",
+						"description": "Create product request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"features": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"translations": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"language": {
+															"type": "number"
+														},
+														"title": {
+															"type": "string"
+														},
+														"description": {
+															"type": "string"
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to get features for product.",
+				"description": "Functionality for admin / partner to get features for product.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "id",
+						"in": "query",
+						"required": true,
+						"description": "Product Id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/dashboardList": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for admin / partner to get product list FOR DASHBOARD",
+				"description": "Functionality for admin / partner to get product list FOR DASHBOARD.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Create product",
+						"description": "Create product request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"pageNo": {
+									"type": "number"
+								},
+								"limit": {
+									"type": "number"
+								},
+								"search": {
+									"type": "string"
+								},
+								"category": {
+									"type": "string"
+								},
+								"status": {
+									"type": "number"
+								},
+								"priceFrom": {
+									"type": "number"
+								},
+								"priceTo": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/details": {
+			"get": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for all to get details of the product.",
+				"description": "Functionality for all to get details of the product.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"name": "language",
+						"in": "header",
+						"required": true,
+						"description": "Language",
+						"type": "number"
+					},
+					{
+						"name": "id",
+						"in": "query",
+						"required": true,
+						"description": "Product Id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/range": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for all to get product range",
+				"description": "Functionality for all to get product range.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"name": "language",
+						"in": "header",
+						"required": true,
+						"description": "Language",
+						"type": "number"
+					},
+					{
+						"in": "body",
+						"name": "Get product range",
+						"description": "Get product range request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"chosen": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"attribute": {
+												"type": "string"
+											},
+											"option": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/product/version": {
+			"post": {
+				"tags": [
+					"Product"
+				],
+				"summary": "Functionality for all to get product version",
+				"description": "Functionality for all to get product version.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"name": "language",
+						"in": "header",
+						"required": true,
+						"description": "Language",
+						"type": "number"
+					},
+					{
+						"in": "body",
+						"name": "Get product version",
+						"description": "Get product version request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"chosen": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"attribute": {
+												"type": "string"
+											},
+											"option": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/wish": {
+			"post": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Functionality for users to add new list.",
+				"description": "Functionality for users to add new list.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Add wish list",
+						"description": "Add wish list request body(Name is required)",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"companyId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Functionality for users to update list.",
+				"description": "Functionality for users to update list.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Update wish list",
+						"description": "Update wish list request body(Name and id are required)",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"id": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Functionality for users to delete list.",
+				"description": "Functionality for users to delete list.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Delete wish list",
+						"description": "Delete wish list request body(Name and id are required)",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Functionality for user to get wish lists.",
+				"description": "Functionality for user to get wish lists.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"$ref": "#/parameters/languageInHeader"
+					},
+					{
+						"$ref": "#/parameters/pageNo"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					},
+					{
+						"name": "type",
+						"in": "query",
+						"required": false,
+						"description": "Type of lists(Creator or invited)",
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/wish/details": {
+			"get": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Functionality for user to get wish lists details.",
+				"description": "Functionality for user to get wish lists details.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"$ref": "#/parameters/idInQuery"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/wish/short": {
+			"get": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Functionality for user to get short wish lists containing product or not.",
+				"description": "Functionality for user to get short wish lists containing product or not.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "productId",
+						"in": "query",
+						"required": true,
+						"description": "Product Id",
+						"type": "string"
+					},
+					{
+						"name": "productVersionId",
+						"in": "query",
+						"required": false,
+						"description": "Version Id(required when product has versions)",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/wish/product": {
+			"post": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Functionality for users to remove or add product/version to list/lists.",
+				"description": "Functionality for users to remove or add product/version to list/lists.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Add/Remove to/from wish list (If product has versions, version Id is required).",
+						"description": "Add/Remove to/from wish list (If product has versions, version Id is required).",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"productId": {
+									"type": "string"
+								},
+								"productVersionId": {
+									"type": "string"
+								},
+								"actions": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"wishListId": {
+												"type": "string"
+											},
+											"action": {
+												"type": "number"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Delete product from wish list for creator user",
+				"description": "Delete product from wish list functionality for creator user.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Delete product from wish list",
+						"description": "Delete product from wish list request body",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"wishListId": {
+									"type": "string"
+								},
+								"wishProductId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/wish/product/approve": {
+			"put": {
+				"tags": [
+					"WishList"
+				],
+				"summary": "Functionality for creator user to approve unapproved product",
+				"description": "Functionality for creator user to approve unapproved product",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Set to approved body.",
+						"description": "Set to approved body.",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/conversation": {
+			"get": {
+				"tags": [
+					"Conversation"
+				],
+				"summary": "Functionality for WEB User and admins to get message list.",
+				"description": "Functionality for WEB User and admins to get message list.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"name": "deviceId",
+						"in": "header",
+						"required": false,
+						"description": "Device Id of the app guest",
+						"type": "string"
+					},
+					{
+						"name": "language",
+						"in": "header",
+						"required": true,
+						"description": "Language",
+						"type": "string"
+					},
+					{
+						"$ref": "#/parameters/pageNo"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					},
+					{
+						"name": "conversationId",
+						"in": "query",
+						"required": false,
+						"description": "Required for admin",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/conversation/user": {
+			"get": {
+				"tags": [
+					"Conversation"
+				],
+				"summary": "Functionality for APP Users, or APP Guests to get message list.",
+				"description": "Functionality for APP Users, or APP Guests to get message list.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"name": "deviceId",
+						"in": "header",
+						"required": false,
+						"description": "Device Id of the app guest",
+						"type": "string"
+					},
+					{
+						"name": "language",
+						"in": "header",
+						"required": true,
+						"description": "Language",
+						"type": "string"
+					},
+					{
+						"name": "skip",
+						"in": "query",
+						"required": true,
+						"description": "Message count to skip",
+						"type": "number"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/conversation/userBadge": {
+			"get": {
+				"tags": [
+					"Conversation"
+				],
+				"summary": "Functionality for Users, or APP Guests to get message badge.",
+				"description": "Functionality for Users, or APP Guests to get message badge.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"name": "deviceId",
+						"in": "header",
+						"required": false,
+						"description": "Device Id of the app guest",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/conversation/send": {
+			"post": {
+				"tags": [
+					"Conversation"
+				],
+				"summary": "Functionality for User or APP Guest to send message",
+				"description": "Functionality for User or APP Guest to send message",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/AuthorizationOptional"
+					},
+					{
+						"name": "deviceId",
+						"description": "Required when guest",
+						"type": "string",
+						"in": "header",
+						"required": false
+					},
+					{
+						"name": "message",
+						"in": "formData",
+						"required": false,
+						"description": "Text message, required when file is missing",
+						"type": "string"
+					},
+					{
+						"name": "file",
+						"description": "Image or audio message, required wen text message is missing",
+						"type": "file",
+						"in": "formData",
+						"required": false
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/conversation/answer": {
+			"post": {
+				"tags": [
+					"Conversation"
+				],
+				"summary": "Functionality for Admins to answer message",
+				"description": "Functionality for Admins to answer message",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "conversationId",
+						"description": "Conversation Id",
+						"type": "string",
+						"in": "formData",
+						"required": true
+					},
+					{
+						"name": "message",
+						"in": "formData",
+						"required": false,
+						"description": "Text message, required when file is missing",
+						"type": "string"
+					},
+					{
+						"name": "file",
+						"description": "Image or audio message, required wen text message is missing",
+						"type": "file",
+						"in": "formData",
+						"required": false
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/conversation/list": {
+			"get": {
+				"tags": [
+					"Conversation"
+				],
+				"summary": "Functionality for Admins to get conversation list.",
+				"description": "Functionality for Admins to get conversation list.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "language",
+						"in": "header",
+						"required": true,
+						"description": "Language",
+						"type": "string"
+					},
+					{
+						"name": "skip",
+						"in": "query",
+						"required": true,
+						"description": "Message count to skip",
+						"type": "number"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/conversation/messageList": {
+			"get": {
+				"tags": [
+					"Conversation"
+				],
+				"summary": "Functionality for Admins to get message list.",
+				"description": "Functionality for Admins to get message list.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "id",
+						"in": "query",
+						"required": true,
+						"description": "Conversation Id",
+						"type": "string"
+					},
+					{
+						"name": "skip",
+						"in": "query",
+						"required": true,
+						"description": "Message count to skip",
+						"type": "number"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/conversation/adminBadge": {
+			"get": {
+				"tags": [
+					"Conversation"
+				],
+				"summary": "Functionality for APP Users, or APP Guests to get message badge.",
+				"description": "Functionality for APP Users, or APP Guests to get message badge.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/partner": {
+			"post": {
+				"tags": [
+					"Partner"
+				],
+				"summary": "Add partner",
+				"description": "Functionality to create new partner.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Add partner",
+						"description": "Add partner request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"vatid": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"email": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								},
+								"phoneNumber": {
+									"type": "string"
+								},
+								"contactperson": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/partner/request": {
+			"post": {
+				"tags": [
+					"Partner"
+				],
+				"summary": "Add partner",
+				"description": "Functionality to create new partner.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Add partner",
+						"description": "Add partner request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"vatid": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"email": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								},
+								"phoneNumber": {
+									"type": "string"
+								},
+								"contactperson": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/partner/selectList": {
+			"get": {
+				"tags": [
+					"Partner"
+				],
+				"summary": "Functionality for APP Users, or APP Guests to get message badge.",
+				"description": "Functionality for APP Users, or APP Guests to get message badge.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "Add partner",
+						"description": "Add partner request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"vatid": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"email": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								},
+								"phoneNumber": {
+									"type": "string"
+								},
+								"contactperson": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/partner/activatePartner": {
+			"put": {
+				"tags": [
+					"Partner"
+				],
+				"summary": "Functionality for Activate or Deactivate Partners using Admin permissions",
+				"description": "Functionality for Activate or Deactivate Partners using Admin permissions",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"in": "body",
+						"name": "Activate partner",
+						"description": "Activate partner request body",
+						"required": "true",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"partnerId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/partner/list": {
+			"get": {
+				"tags": [
+					"Partner"
+				],
+				"summary": "Functionality for getting partners lists.",
+				"description": "Functionality for getting partners lists.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"$ref": "#/parameters/pageNo"
+					},
+					{
+						"$ref": "#/parameters/limit"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		},
+		"/partner/details": {
+			"get": {
+				"tags": [
+					"Partner"
+				],
+				"summary": "Functionality for getting partner details.",
+				"description": "Functionality for getting partner details.",
+				"consumes": "application/json",
+				"produces": "application/json",
+				"parameters": [
+					{
+						"$ref": "#/parameters/Authorization"
+					},
+					{
+						"name": "partnerId",
+						"in": "query",
+						"required": true,
+						"description": "Partner identifier",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful response object"
+					},
+					"400": {
+						"description": "Bad request, check keys and values"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal server error"
+					}
+				}
+			}
+		}
+	},
+	"parameters": {
+		"Authorization": {
+			"name": "Authorization",
+			"in": "header",
+			"required": true,
+			"description": "Bearer token",
+			"type": "string"
+		},
+		"AuthorizationOptional": {
+			"name": "Authorization",
+			"in": "header",
+			"required": false,
+			"description": "Bearer token",
+			"type": "string"
+		},
+		"idInQuery": {
+			"name": "id",
+			"in": "query",
+			"required": true,
+			"description": "Item Id",
+			"type": "string"
+		},
+		"idInQueryOptional": {
+			"name": "id",
+			"in": "query",
+			"required": false,
+			"description": "Item Id",
+			"type": "string"
+		},
+		"pageNo": {
+			"name": "pageNo",
+			"in": "query",
+			"required": true,
+			"description": "Page number",
+			"type": "number"
+		},
+		"limit": {
+			"name": "limit",
+			"in": "query",
+			"required": true,
+			"description": "Limit to get",
+			"type": "number"
+		},
+		"languageInQuery": {
+			"name": "language",
+			"in": "query",
+			"required": true,
+			"description": "Language",
+			"type": "number"
+		},
+		"languageInHeader": {
+			"name": "language",
+			"in": "header",
+			"required": true,
+			"description": "Language",
+			"type": "number"
+		}
+	}
+}
